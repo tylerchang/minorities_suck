@@ -1,8 +1,14 @@
 import React, {useState} from 'react';
 import './pages.css';
-import { View} from 'react-native';
+import { Text, View, StyleSheet,Image } from 'react-native';
 import {Link} from 'react-router-dom';
 import Popup from '../components/Popup';
+import { hostNewGame, joinGame} from '../firebase/database';
+
+const initialValues = {
+    name:"",
+    invitecode:"",
+  };
 
 function Home() {
     const [isOpen1, setIsOpen1] = useState(false);
@@ -15,7 +21,27 @@ function Home() {
         setIsOpen2(!isOpen2);
     }
 
+    const [values, setValues] = useState(initialValues);
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setValues({
+            ...values,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit1 = (e) => {
+        e.preventDefault();
+        hostNewGame(values.name); 
+    }
+
+    const handleSubmit2 = (e) => {
+        e.preventDefault();
+        joinGame(values.name, values.invitecode); 
+    }
+
     return (
+
         <div className='home'>
         <View 
             style={{
@@ -39,9 +65,16 @@ function Home() {
         {isOpen1 && <Popup
             content={<>
             <div className='hostPopup'>
-            <form>
-                <label> Enter Name <br />
-                    <input type="text" name="name" placeholder="Nickname"/>
+            <form onSubmit={handleSubmit1}>
+                <label> Enter Name 
+                    <br />
+                    <input 
+                        type="text" 
+                        name="name" 
+                        value={values.name}
+                        placeholder="Nickname" 
+                        onChange={handleInputChange}
+                        />
                 </label>
                 <br />
                 <button className='submitButton' type="submit" value="submit">Let's Go</button>
@@ -54,13 +87,25 @@ function Home() {
         {isOpen2 && <Popup
             content={<>
             <div className='hostPopup'>
-            <form>
-                <label> Enter Name <br />
-                    <input type="text" name="name" placeholder="Nickname"/>
+            <form onSubmit={handleSubmit2}>
+                <label> Enter Name 
+                <br />
+                    <input 
+                        type="text" 
+                        name="name"
+                        value={values.name} 
+                        placeholder="Nickname" 
+                        onChange={handleInputChange}/>
                 </label>
                 <br />
-                <label> Enter Invite Code <br />
-                    <input type="text" name="invitecode" placeholder="Code"/>
+                <label> Enter Invite Code 
+                <br />
+                    <input 
+                        type="text" 
+                        name="invitecode" 
+                        value={values.invitecode}
+                        placeholder="Code" 
+                        onChange={handleInputChange}/>
                 </label>
                 <br />
                 <button className='submitButton' type="submit" value="submit">Let's Go</button>
