@@ -1,0 +1,44 @@
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    padding-top: 80px;
+    font-size: 80px;
+    padding-bottom: 30px;
+}
+
+.hostbutton {
+    position: 'relative';
+    font-size: 30px; 
+    padding: 10px 30px;
+    align-items: 'center';
+    justify-content: 'center';
+}
+
+.joinbutton {
+    position: 'relative';
+    font-size: 30px; 
+    padding: 10px 30px;
+    align-items: 'center';
+    justify-content: 'center';
+}
+
+.homebuttons {
+    padding: 15px;
+}
+
+a:visited {
+    text-decoration: none;
+    color:black;
+}
+
+  .hostPopup {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  
