@@ -1,2 +1,3 @@
 Summer 2022 Project <br  />
-Team: Chris Chae, Jennifer Kim, David Min, Lavid Dee, and Tyler Chang
+Developer Team: Jennifer Kim, David Min, Tyler Chang <br />
+Management: Chris Chae, Lavid Dee
