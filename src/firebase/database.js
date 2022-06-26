@@ -1,4 +1,4 @@
-import db from "./config";
+import {db} from "./config";
 import {
   collection,
   addDoc,
@@ -73,5 +73,4 @@ async function hostNewGame(player_name){
     
 }
 
- 
-export default App;
+export {hostNewGame, joinGame}
