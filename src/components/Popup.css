@@ -9,15 +9,15 @@
    
   .box {
     position: relative;
-    width: 20%;
+    width: 60vh;
     margin: 0 auto;
     height: auto;
-    max-height: 70vh;
-    margin-top: calc(100vh - 85vh - 20px);
+    max-height: 100vh;
+    margin-top: calc(100vh - 55vh);
     background: #fff;
-    border-radius: 4px;
-    padding: 30px;
-    border: 1px solid #999;
+    border-radius: 20px;
+    padding: 50px;
+    border: 10px solid rgb(255, 255, 255);
     overflow: auto;
   }
    
@@ -25,14 +25,41 @@
     content: 'x';
     cursor: pointer;
     position: fixed;
-    right: calc(38% - 10px);
-    top: calc(100vh - 85vh - 30px);
-    background: #ededed;
+    justify-content: center;
+    top: 40vh;
+    background: #ffffff;
     width: 25px;
     height: 25px;
     border-radius: 50%;
     line-height: 20px;
     text-align: center;
-    border: 1px solid #999;
+    border: 2px solid rgb(255, 255, 255);
     font-size: 20px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .popup-box {
+      position: fixed;
+      background: #00000050;
+      width: 100%;
+      height: 200vh;
+      top: 0;
+      left: 0;
+    }
+
+    .box {
+      position: relative;
+      width: 60vh;
+      margin: 0 auto;
+      height: auto;
+      max-height: 100vh;
+      margin-top: calc(100vh - 55vh);
+      background: #fff;
+      border-radius: 4px;
+      padding: 50px;
+      border: 1px solid #999;
+      overflow: auto;
+    }
+
+  
   }

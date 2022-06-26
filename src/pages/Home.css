@@ -1,0 +1,155 @@
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    padding-top: 80px;
+    font-size: 80px;
+    padding-bottom: 30px;
+}
+
+.hostbutton {
+    cursor: pointer;
+    position: 'relative';
+    font-size: 30px; 
+    padding: 10px 30px;
+    align-items: 'center';
+    justify-content: 'center';
+    border-radius: 5px;
+    border-width: 3px;
+    background-color: #fff;
+}
+
+.hostbutton:hover {
+    background-color: rgb(249, 141, 141);
+}
+
+.joinbutton {
+    cursor: pointer;
+    position: 'relative';
+    font-size: 30px; 
+    padding: 10px 30px;
+    align-items: 'center';
+    justify-content: 'center';
+    border-radius: 5px;
+    border-width: 3px;
+    background-color: #fff;
+}
+
+.joinbutton:hover {
+    background-color: rgb(127, 189, 243);
+}
+
+.homebuttons {
+    padding: 15px;
+}
+
+a:visited {
+    text-decoration: none;
+    color:black;
+}
+
+.howtoplay {
+    padding-top: 15px;
+    font-size: 20px;
+}
+
+.howtoplay:hover {
+    color: rgb(249, 141, 141);
+}
+
+.hostPopup {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+label {
+    font-size: 25px;
+}
+
+input {
+    padding: 10px 10px 10px 10px;
+    font-size: 15px;
+    box-shadow: 1px 1px 1px 1px transparent;
+    border-radius: 8px;
+}
+
+.submitButton {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.divider {
+    padding-top: 10px;
+}
+
+@media screen and (max-width: 960px) and (min-width: 699px) {
+    .title {
+        padding-top: 80px;
+        font-size: 60px;
+        padding-bottom: 30px;
+    }
+
+    .hostbutton {
+        position: 'relative';
+        font-size: 27px; 
+        padding: 10px 20px;
+        align-items: 'center';
+        justify-content: 'center';
+    }
+    
+    .joinbutton {
+        position: 'relative';
+        font-size: 27px; 
+        padding: 10px 20px;
+        align-items: 'center';
+        justify-content: 'center';
+    }
+}
+
+  @media screen and (max-width: 700px) {
+    .home {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .title {
+        padding-top: 80px;
+        font-size: 43px;
+        padding-bottom: 30px;
+    }
+    
+    .hostbutton {
+        position: 'relative';
+        font-size: 25px; 
+        padding: 10px 20px;
+        align-items: 'center';
+        justify-content: 'center';
+    }
+    
+    .joinbutton {
+        position: 'relative';
+        font-size: 25px; 
+        padding: 10px 20px;
+        align-items: 'center';
+        justify-content: 'center';
+    }
+    
+    .homebuttons {
+        padding: 12px;
+    }
+    
+    .hostPopup {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .howtoplay {
+        font-size: 20px;
+    }
+  }

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import './pages.css';
-import { Text, View, StyleSheet,Image } from 'react-native';
+import './Home.css';
+import {View} from 'react-native';
 import {Link} from 'react-router-dom';
 import Popup from '../components/Popup';
 import { hostNewGame, joinGame} from '../firebase/database';
@@ -58,27 +58,29 @@ function Home() {
                 <button className='joinbutton'onClick={togglePopup2}> Join Game </button>
             </div>
             <Link to='/howtoplay' style={{ textDecoration: 'none' }}>
-                <h2>How to play</h2>
+                <h2 className='howtoplay'>How to play</h2>
             </Link>
         </View>
 
         {isOpen1 && <Popup
             content={<>
             <div className='hostPopup'>
-            <form onSubmit={handleSubmit1}>
-                <label> Enter Name 
-                    <br />
-                    <input 
-                        type="text" 
-                        name="name" 
-                        value={values.name}
-                        placeholder="Nickname" 
-                        onChange={handleInputChange}
+                <form onSubmit={handleSubmit1}>
+                    <label> Enter Name 
+                        <br />
+                        <div className='divider'/>
+                        <input 
+                            type="text" 
+                            name="name" 
+                            value={values.name}
+                            placeholder="Nickname" 
+                            onChange={handleInputChange}
                         />
-                </label>
-                <br />
-                <button className='submitButton' type="submit" value="submit">Let's Go</button>
-            </form>
+                    </label>
+                    <br />
+                    <div className='divider'/>
+                    <button className='submitButton' type="submit" value="submit">Let's Go</button>
+                </form>
             </div>
             </>}
             handleClose={togglePopup1}
@@ -90,6 +92,7 @@ function Home() {
             <form onSubmit={handleSubmit2}>
                 <label> Enter Name 
                 <br />
+                <div className='divider'/>
                     <input 
                         type="text" 
                         name="name"
@@ -98,8 +101,10 @@ function Home() {
                         onChange={handleInputChange}/>
                 </label>
                 <br />
+                <div className='divider'/>
                 <label> Enter Invite Code 
                 <br />
+                <div className='divider'/>
                     <input 
                         type="text" 
                         name="invitecode" 
@@ -108,6 +113,7 @@ function Home() {
                         onChange={handleInputChange}/>
                 </label>
                 <br />
+                <div className='divider'/>
                 <button className='submitButton' type="submit" value="submit">Let's Go</button>
             </form>
             </div>

@@ -14,7 +14,7 @@ class Navbar extends Component {
         return(
         <nav className="NavbarItems">
             <Link to='/' style={{ textDecoration: 'none' }}>
-                <h1 className='navbar-logo'>Mob Mentality <i className='fa-solid fa-people-group'></i></h1>
+                <h1 className='navbar-logo'>Mob Mentality </h1>
             </Link>
             <div className='menu-icon' onClick={this.handleClick}>
                 <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
