@@ -110,7 +110,7 @@ input {
     }
 }
 
-  @media screen and (max-width: 700px) {
+@media screen and (max-width: 700px) {
     .home {
         display: flex;
         justify-content: center;
@@ -152,4 +152,4 @@ input {
     .howtoplay {
         font-size: 20px;
     }
-  }
+}

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import './Home.css';
 import {View} from 'react-native';
-import {Link} from 'react-router-dom';
-import Popup from '../components/Popup';
-import { hostNewGame, joinGame} from '../firebase/database';
+import {Link, useNavigate} from 'react-router-dom';
+import Popup from '../../components/Popup';
+import { hostNewGame, joinGame} from '../../firebase/database';
 
 const initialValues = {
     name:"",
@@ -13,6 +13,8 @@ const initialValues = {
 function Home() {
     const [isOpen1, setIsOpen1] = useState(false);
     const [isOpen2, setIsOpen2] = useState(false);
+
+    const navigate = useNavigate();
 
     const togglePopup1 = () => {
         setIsOpen1(!isOpen1);
@@ -33,6 +35,7 @@ function Home() {
     const handleSubmit1 = (e) => {
         e.preventDefault();
         hostNewGame(values.name); 
+        navigate('/lobby');
     }
 
     const handleSubmit2 = (e) => {
