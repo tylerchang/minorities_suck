@@ -2,7 +2,7 @@ import React from 'react';
 
 function HowToPlay() {
     return (
-        <div className='howtoplay'>
+        <div className='howToPlay'>
             <h1> How to Play </h1>
 
         </div>

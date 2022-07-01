@@ -1,0 +1,121 @@
+.invite {
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 15vh;
+} 
+
+.letters {
+    position: absolute;
+    height: auto;
+    padding-left: 80px;
+    padding-right: 80px;
+    font-size: 40px;
+    border-style: solid;
+    border-color: rgb(127, 189, 243);
+    border-radius: 10px;
+    border-width: 4px;
+}
+
+.notepad {
+    border-left: 1.8px solid rgb(249, 141, 141);
+    border-right: 1.8px solid rgb(249, 141, 141);
+    width: 5px;
+    float: left;
+    height: 495px;
+    margin-left: 40px;
+}
+
+.listItemClass li {
+    list-style: none;
+    border-bottom: 2px dotted #ccc;
+    text-indent: 35px;
+    height: auto;
+    padding: 10px;
+    text-transform: capitalize;
+}
+
+.listItemClass li:hover {
+    background-color: #f0f0f0;
+}
+
+.listItemClass {
+    color: #555;
+    font-size: 22px;
+    padding: 0 !important;
+    width: 600px;
+    font-family: courier, monospace;
+    border: 1px solid #dedede;
+}
+
+.players {
+    background-color: #f5f5f5;
+    width: 600px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.status {
+    padding-left: 300px;
+    color: rgb(249, 141, 141);
+}
+
+.chooseStatus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.statusButton {
+    height: 50px;
+    width: 120px;
+    font-size: 25px;
+    background-color: rgb(127, 189, 243);
+    border-radius: 20px;
+    border-color:rgb(127, 189, 243);
+}
+
+.statusButton:hover {
+    background-color: rgb(75, 160, 234);
+    cursor: pointer;
+}
+
+.space {
+    padding: 20px;
+}
+
+@media screen and (max-width: 960px) and (min-width: 699px) {
+    .listItemClass {
+        width: 400px;
+    }
+    
+    .players {
+        width: 400px;
+    }
+
+    .status {
+        padding-left: 100px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .listItemClass {
+        width: 300px;
+    }
+    
+    .players {
+        width: 300px;
+    }
+
+    .status {
+        padding-left: 30px;
+    }
+}
