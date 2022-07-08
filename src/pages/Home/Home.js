@@ -3,7 +3,8 @@ import './Home.css';
 import {View} from 'react-native';
 import {Link, useNavigate} from 'react-router-dom';
 import Popup from '../../components/Popup';
-import { hostNewGame, joinGame} from '../../firebase/database';
+import { hostNewGame, joinGame, getDocumentData} from '../../firebase/database';
+import Lobby from '../Lobby/Lobby';
 
 const initialValues = {
     name:"",
@@ -32,10 +33,16 @@ function Home() {
         });
     };
 
-    const handleSubmit1 = (e) => {
+    const handleSubmit1 = async (e) => {
         e.preventDefault();
-        hostNewGame(values.name); 
-        navigate('/lobby');
+        const new_host_data_id = await hostNewGame(values.name);
+        console.log(new_host_data_id) 
+        navigate('/lobby', 
+            {
+                state: {
+                    player_data: new_host_data_id,
+                }
+            });
     }
 
     const handleSubmit2 = (e) => {
