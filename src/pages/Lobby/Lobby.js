@@ -10,35 +10,30 @@ function Lobby() {
         {
             id: 1,
             title: "David",
+            status: "Ready",
           },
         {
             id: 2,
             title: "Chris",
+            status: "Not Ready",
         },
         {
             id: 3,
             title: "Tyler",
+            status: "Ready",
         },
         {
             id: 4,
             title: "Lavid",
+            status: "Not Ready",
         },
         {
             id: 5,
             title: "Jenn",
+            status: "Ready",
         },
     ]);
 
-    const addItem = () => {
-        const items = [...listItems];
-        const newItem = {
-          id: items.length + 1,
-          title: `Item ${items.length + 1}`,
-        };
-    
-        items.push(newItem);
-        setListItems(items);
-    };
 
     const getListSize = () => {
         const newHeight = listRef.current.clientHeight;
@@ -70,7 +65,7 @@ function Lobby() {
                         <li className="item" key={item.id}>
                             <View style={{flexDirection:'row'}}>
                             <div className="playerName">{item.id}. {item.title}</div> 
-                            <div className="status">Ready</div>
+                            <div className="status">{item.status}</div>
                             </View>
                         </li>
                     ))}
