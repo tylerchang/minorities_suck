@@ -1,44 +1,45 @@
 import React, {useState, useRef, useEffect} from 'react';
 import './Lobby.css';
 import {View} from 'react-native';
-
+import { useLocation } from 'react-router-dom';
+import { getDocumentData, getAllPlayersInRoom } from '../../firebase/database';
+import {
+    collection,
+    addDoc,
+    updateDoc,
+    arrayUnion,
+    getDoc,
+    doc,
+    onSnapshot
+  } from "firebase/firestore/lite";
 function Lobby() {
+    const {state} = useLocation()
+
+    let list_of_players = null;
+
+    async function processData(){
+        // Data processing
+        const player_id = state.player_data
+        const room_id = (await getDocumentData("players", player_id)).room_id;
+        console.log("room id: ", room_id)
+        const list_of_players = await getAllPlayersInRoom(room_id);
+        console.log(list_of_players);
+        return list_of_players
+    }
+
+    (async () => {
+        list_of_players = await processData();
+        console.log(list_of_players);
+      })()
+    
+    console.log("async is done");
+
     const listRef = useRef();
     const [heightvalue, setHeight] = useState();
+    const [listOfPlayers, setListOfPlayers] = useState([]);
+    setListOfPlayers(list_of_players);
 
-    const [listItems, setListItems] = useState([
-        {
-            id: 1,
-            title: "David",
-          },
-        {
-            id: 2,
-            title: "Chris",
-        },
-        {
-            id: 3,
-            title: "Tyler",
-        },
-        {
-            id: 4,
-            title: "Lavid",
-        },
-        {
-            id: 5,
-            title: "Jenn",
-        },
-    ]);
-
-    const addItem = () => {
-        const items = [...listItems];
-        const newItem = {
-          id: items.length + 1,
-          title: `Item ${items.length + 1}`,
-        };
-    
-        items.push(newItem);
-        setListItems(items);
-    };
+    console.log(listOfPlayers);
 
     const getListSize = () => {
         const newHeight = listRef.current.clientHeight;
@@ -47,7 +48,7 @@ function Lobby() {
 
     useEffect(() => {
         getListSize();
-      }, [listItems]);
+      }, [listOfPlayers]);
 
       useEffect(() => {
         window.addEventListener("resize", getListSize);
@@ -66,14 +67,28 @@ function Lobby() {
                     }}
                 />
                 <ul className="listItemClass" ref={listRef}>
-                    {listItems.map((item) => (
+                    
+                    {listOfPlayers ? 
+                    <div>
+                        {listOfPlayers.map((item) => (
                         <li className="item" key={item.id}>
                             <View style={{flexDirection:'row'}}>
-                            <div className="playerName">{item.id}. {item.title}</div> 
+                            <div className="playerName">{item}</div> 
                             <div className="status">Ready</div>
                             </View>
                         </li>
                     ))}
+                    </div> : <li>A random item</li> }
+
+                    {/* {listOfPlayers.map((item) => (
+                    <li className="item" key={item.id}>
+                        <View style={{flexDirection:'row'}}>
+                        <div className="playerName">{item}</div> 
+                        <div className="status">Ready</div>
+                        </View>
+                    </li>))} */}
+
+                    
                 </ul>
             </div>
             <div className="chooseStatus">
