@@ -19,13 +19,27 @@ function Lobby() {
   const listRef = useRef();
   const [heightvalue, setHeight] = useState();
   const [listOfPlayers, setListOfPlayers] = useState([]);
+  const [lobbyRoomCode, setLobbyRoomCode] = useState();
 
   let list_of_players = null;
+
+  /* async function processData(){
+        // Data processing
+        const player_id = state.player_data
+        const room_id = (await getDocumentData("players", player_id)).room_id;
+        console.log("room id: ", room_id)
+        const list_of_players = await getAllPlayersInRoom(room_id);
+        console.log(list_of_players);
+        return list_of_players
+    } */
 
   useEffect(() => {
     async function processData() {
       const player_id = state.player_data;
       const room_id = (await getDocumentData("players", player_id)).room_id;
+      
+      setLobbyRoomCode((await getDocumentData("rooms", room_id)).code);
+
       console.log("room id: ", room_id);
       return onSnapshot(doc(db, "rooms", room_id), (doc) => {
         // returns a promise
@@ -41,6 +55,22 @@ function Lobby() {
     processData();
   }, []);
 
+  /*const processData = async () => {
+        const player_id = state.player_data
+        const room_id = (await getDocumentData("players", player_id)).room_id;
+        console.log("room id: ", room_id)
+        const list_of_players = await getAllPlayersInRoom(room_id);
+        //console.log(list_of_players);
+        setListOfPlayers(list_of_players); 
+    }; */
+
+  /* (async () => {
+        list_of_players = await processData();
+        console.log(list_of_players);
+      })()
+    
+    console.log("async is done"); */
+
   const getListSize = () => {
     const newHeight = listRef.current.clientHeight;
     setHeight(newHeight);
@@ -54,11 +84,15 @@ function Lobby() {
     window.addEventListener("resize", getListSize);
   }, []);
 
+  /*useEffect(() => {
+        processData();
+    }, [listOfPlayers]); */
+
   return (
     <div className="lobby">
       <div className="invite"> Invite Code </div>
       <div className="code">
-        <div className="letters"> CODE </div>
+        <div className="letters"> {lobbyRoomCode} </div>
       </div>
       <div className="players">
         <div
