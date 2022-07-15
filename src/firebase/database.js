@@ -19,6 +19,7 @@ async function addRoom() {
     player_ids: [],
     question_ids: [],
   });
+
 }
 
 // Adds a player to the database - private use only
@@ -29,22 +30,29 @@ async function addPlayer(player_name) {
     room_id: "",
     vote: -1,
     isHost: false,
+    isReady: false
   });
 }
 
 // Set player to host
 async function setPlayerAsHost(player_id) {
   const player_ref = doc(db, "players", player_id);
-
   await updateDoc(player_ref, {
     isHost: true,
   });
 }
 
+async function setPlayerToReady(player_id, room_id) {
+  const player_ref = doc(db, "players", player_id);
+  await updateDoc(player_ref, {
+    isReady: true,
+  });
+}
+
+
 async function getAllPlayersInRoom(room_id) {
   const room = await getDocumentData("rooms", room_id);
   const player_ids_list = room.player_ids;
-  console.log("PLAYER IDS LIST: ", player_ids_list);
   return player_ids_list.map(
     async (player_id) => (await getDocumentData("players", player_id)).name
   );
@@ -77,9 +85,6 @@ async function joinGame(player_name, room_code) {
   const docSnapRooms = await getDocs(q);
 
   const docRefRoom = doc(db, "rooms", docSnapRooms.docs.at(0).id);
-  // const docRefRoom = await addRoom();
-  console.log(docRefRoom);
-  console.log(docRefPlayer);
   // Set the player as host
   // Add the player to the room:
 
@@ -99,8 +104,6 @@ async function hostNewGame(player_name) {
   const docRefRoom = await addRoom();
   const docRefPlayer = await addPlayer(player_name);
 
-  console.log(docRefRoom);
-
   // Set the player as host
   setPlayerAsHost(docRefPlayer.id);
   // Add the player to the room:
@@ -114,4 +117,5 @@ export {
   setPlayerAsHost,
   getDocumentData,
   getAllPlayersInRoom,
+  setPlayerToReady
 };

@@ -40,10 +40,12 @@ function Home() {
   const handleSubmit1 = async (e) => {
     e.preventDefault();
     const new_host_data_id = await hostNewGame(values.name);
+    const room_id = await getDocumentData("players", new_host_data_id).room_id;
     console.log(new_host_data_id);
     navigate("/lobby", {
       state: {
         player_data: new_host_data_id,
+        attached_room_id: room_id
       },
     });
   };
@@ -52,10 +54,13 @@ function Home() {
     e.preventDefault();
     console.log(values.name, values.invitecode);
     const new_player_data_id = await joinGame(values.name, values.invitecode);
+    const room_id = await getDocumentData("players", new_player_data_id).room_id;
+
     console.log("New player id:", new_player_data_id);
     navigate("/lobby", {
       state: {
         player_data: new_player_data_id,
+        attached_room_id: room_id
       },
     });
   };
