@@ -1,9 +1,14 @@
+.lobby {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .invite {
     font-size: 40px;
     text-align: center;
     font-weight: bold;
 }
-
 
 .code {
     display: flex;
@@ -14,7 +19,6 @@
 
 .letters {
     position: absolute;
-    height: auto;
     padding-left: 80px;
     padding-right: 80px;
     font-size: 40px;
@@ -25,32 +29,27 @@
 }
 
 .notepad {
-    border-left: 1.8px solid rgb(249, 141, 141);
-    border-right: 1.8px solid rgb(249, 141, 141);
-    width: 5px;
-    float: left;
-    
-    margin-left: 40px;
+    width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .listItemClass li {
     list-style: none;
     border-bottom: 2px dotted #ccc;
     text-indent: 35px;
-    height: auto;
     padding: 10px;
     text-transform: capitalize;
-}
-
-.listItemClass li:hover {
-    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .listItemClass {
-    color: #555;
     font-size: 22px;
     padding: 0 !important;
-    width: 600px;
+    width: 650px;
     font-family: courier, monospace;
     border: 1px solid #dedede;
 }
@@ -63,7 +62,7 @@
 }
 
 .status {
-    padding-left: 250px;
+    padding-left: auto;
     color: rgb(249, 141, 141);
 }
 
@@ -94,13 +93,10 @@
 
 @media screen and (max-width: 960px) and (min-width: 699px) {
     .listItemClass {
-        width: 400px;
+        width: 500px;
     }
     .players {
-        width: 400px;
-    }
-    .status {
-        padding-left: 100px;
+        width: 500px;
     }
 }
 
@@ -112,7 +108,4 @@
         width: 300px;
     }
 
-    .status {
-        padding-left: 30px;
-    }
 }

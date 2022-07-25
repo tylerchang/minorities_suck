@@ -32,8 +32,8 @@ function Lobby() {
       const room_id = (await getDocumentData("players", player_id)).room_id
       setLobbyRoomID(room_id);
       setLobbyRoomCode((await getDocumentData("rooms", room_id)).code);
-
-      return onSnapshot(doc(db, "rooms", room_id), (doc) => {
+        
+      /* return onSnapshot(doc(db, "rooms", room_id), (doc) => {
         // returns a promise
         if (!doc.empty) {
           // DataFromSnapshot is what ever code you use to get an array of data from
@@ -44,7 +44,16 @@ function Lobby() {
 
 
         }
-      });
+      } */
+        const q = query(collection(db, "players"), where("room_id", "==", room_id));
+        return onSnapshot(q, (querySnapshot) => {
+          const dataArray=[]
+          querySnapshot.forEach((doc) => {
+            dataArray.push(doc.data().name)
+        })
+          setListOfPlayersIds([...dataArray]);
+        }
+      );
     }
 
     processData();
@@ -57,7 +66,8 @@ function Lobby() {
       const q = query(collection(db, "players"), where("isReady", "==", true));
       return onSnapshot(q, (querySnapshot) => {
         querySnapshot.forEach((doc) => {
-            setPlayersReadyStatus(new Map(playersReadyStatus.set(doc.id, true)));
+          // adjusted this line to have doc.data().name instead of doc.id
+            setPlayersReadyStatus(new Map(playersReadyStatus.set(doc.data().name, true)));
         });
         }
     )}
@@ -88,35 +98,39 @@ function Lobby() {
 
   return (
     <div className="lobby">
-      <div className="invite"> Invite Code </div>
-      <div className="code">
+    <View style={{flexDirection: "column"}}>
+        <div className="invite"> Invite Code </div>
+        <div className="code">
         <div className="letters"> {lobbyRoomCode} </div>
-      </div>
-      <div className="players">
+        </div>
         <div
-          className="notepad"
-          style={{
+            className="notepad"
+            style={{
             height: heightvalue,
-          }}
-        />
-        <ul className="listItemClass" ref={listRef}>
-          {listOfPlayersIds.map((item) => (
-            <li className="item" key={item.id}>
-              <View style={{ flexDirection: "row" }}>
-                <div className="playerName">{item}</div>
-                <div className="status" key={item.id}>{playersReadyStatus.get(item) ? "Ready" : "Not Ready"} </div>
-              </View>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="chooseStatus">
-        <View style={{ flexDirection: "row" }}>
-          <button className="statusButton" onClick={updateReadyStatusButton}>Ready</button>
-          <div className="space" />
-          <button className="statusButton">Start</button>
+            justifyContent: 'center',
+            alignItems: 'center',
+            }}
+        >
+            <ul className="listItemClass" ref={listRef}>
+            {listOfPlayersIds.map((item) => (
+                <li className="item" key={item.id}>
+                <View style={{ display: 'flex', flexDirection: "row", justifyConten: 'center', alignItems: 'center' }}>
+                    <div className="playerName">{item}</div>
+                    <div className="status" key={item.id}>{playersReadyStatus.get(item) ? "Ready" : "Not Ready"} </div>
+                </View>
+                </li>
+            ))}
+            </ul>
+        </div>
+      
+        <div className="chooseStatus">
+        <View style={{ flexDirection: "row"}}>
+            <button className="statusButton" onClick={updateReadyStatusButton}>Ready</button>
+            <div className="space" />
+            <button className="statusButton">Start</button>
         </View>
-      </div>
+        </div>
+    </View>
     </div>
   );
 }

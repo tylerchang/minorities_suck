@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { MenuItems } from './MenuItems';
 import {Link} from 'react-router-dom';
 import './Navbar.css';
-
+import mob_logo from '../../images/mob_logo.png';
 class Navbar extends Component {
     state = {clicked: false}
 
@@ -14,7 +14,9 @@ class Navbar extends Component {
         return(
         <nav className="NavbarItems">
             <Link to='/' style={{ textDecoration: 'none' }}>
-                <h1 className='navbar-logo'>Mob Mentality </h1>
+                <h1 className='navbar-logo'>
+                    <img src={mob_logo} alt="mob mentality logo" width={92.7} height={50}/>
+                </h1>
             </Link>
             <div className='menu-icon' onClick={this.handleClick}>
                 <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
