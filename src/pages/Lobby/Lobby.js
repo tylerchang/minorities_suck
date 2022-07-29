@@ -35,17 +35,21 @@ function Lobby() {
   useEffect(() => {
     async function processData() {
       const player_id = state.player_data;
+
+      // TODO: Get room_id using localStorage
       const room_id = (await getDocumentData("players", player_id)).room_id;
       console.log("room id: ", room_id);
-      return onSnapshot(doc(db, "rooms", room_id), (doc) => {
+      var temp_array = [];
+      // TODO: Verify if this new code works
+      onSnapshot(collection(db, `/rooms/${room_id}/players`), (doc) => {
         // returns a promise
         if (!doc.empty) {
           // DataFromSnapshot is what ever code you use to get an array of data from
           // a querySnapshot
-          let dataArray = doc.data().player_ids;
-          setListOfPlayers([...dataArray]);
+          temp_array.push(doc.id);
         }
       });
+      setListOfPlayers([...temp_array]);
     }
 
     processData();
