@@ -29,31 +29,21 @@ function Lobby() {
   useEffect(() => {
     async function processData() {
       const player_id = state.player_data;
-      const room_id = (await getDocumentData("players", player_id)).room_id
-      setLobbyRoomID(room_id);
-      setLobbyRoomCode((await getDocumentData("rooms", room_id)).code);
-        
-      /* return onSnapshot(doc(db, "rooms", room_id), (doc) => {
+
+      // TODO: Get room_id using localStorage
+      const room_id = (await getDocumentData("players", player_id)).room_id;
+      console.log("room id: ", room_id);
+      var temp_array = [];
+      // TODO: Verify if this new code works
+      onSnapshot(collection(db, `/rooms/${room_id}/players`), (doc) => {
         // returns a promise
         if (!doc.empty) {
           // DataFromSnapshot is what ever code you use to get an array of data from
           // a querySnapshot
-          let dataArray = doc.data().player_ids;
-          setListOfPlayersIds([...dataArray]);
-          
-
-
+          temp_array.push(doc.id);
         }
-      } */
-        const q = query(collection(db, "players"), where("room_id", "==", room_id));
-        return onSnapshot(q, (querySnapshot) => {
-          const dataArray=[]
-          querySnapshot.forEach((doc) => {
-            dataArray.push(doc.data().name)
-        })
-          setListOfPlayersIds([...dataArray]);
-        }
-      );
+      });
+      setListOfPlayers([...temp_array]);
     }
 
     processData();

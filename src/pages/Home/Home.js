@@ -3,11 +3,7 @@ import "./Home.css";
 import { View } from "react-native";
 import { Link, useNavigate } from "react-router-dom";
 import Popup from "../../components/Popup";
-import {
-  hostNewGame,
-  joinGame,
-  getDocumentData,
-} from "../../firebase/database";
+import { hostNewGame, joinGame } from "../../firebase/database2";
 import Lobby from "../Lobby/Lobby";
 
 const initialValues = {
@@ -39,8 +35,7 @@ function Home() {
 
   const handleSubmit1 = async (e) => {
     e.preventDefault();
-    const new_host_data_id = await hostNewGame(values.name);
-    const room_id = await getDocumentData("players", new_host_data_id).room_id;
+    const new_host_data_id = (await hostNewGame(values.name)).player_id;
     console.log(new_host_data_id);
     navigate("/lobby", {
       state: {
@@ -53,9 +48,8 @@ function Home() {
   const handleSubmit2 = async (e) => {
     e.preventDefault();
     console.log(values.name, values.invitecode);
-    const new_player_data_id = await joinGame(values.name, values.invitecode);
-    const room_id = await getDocumentData("players", new_player_data_id).room_id;
-
+    const new_player_data_id = (await joinGame(values.name, values.invitecode))
+      .player_id;
     console.log("New player id:", new_player_data_id);
     navigate("/lobby", {
       state: {
