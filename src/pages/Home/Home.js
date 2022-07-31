@@ -37,26 +37,37 @@ function Home() {
     e.preventDefault();
     const new_host_data_id = (await hostNewGame(values.name)).player_id;
     console.log(new_host_data_id);
-    navigate("/lobby", {
+    // localStorage player name
+    localStorage.setItem("player_data", JSON.stringify(new_host_data_id));
+    const room_id = (await hostNewGame(values.name)).room_id;
+    // localStorage room id
+    localStorage.setItem("room_id", JSON.stringify(room_id));
+    console.log(room_id);
+    navigate("/lobby");
+    /*navigate("/lobby", {
       state: {
         player_data: new_host_data_id,
-        attached_room_id: room_id
       },
-    });
+    }); */
   };
 
   const handleSubmit2 = async (e) => {
     e.preventDefault();
     console.log(values.name, values.invitecode);
-    const new_player_data_id = (await joinGame(values.name, values.invitecode))
-      .player_id;
+    // Grab's 2nd object
+    const new_player_data_id = (await joinGame(values.name, values.invitecode))[1];
     console.log("New player id:", new_player_data_id);
-    navigate("/lobby", {
+    // localStorage player name
+    localStorage.setItem("player_data", JSON.stringify(new_player_data_id));
+    const room_id = (await joinGame(values.name, values.invitecode))[0];
+    // localStorage room id
+    localStorage.setItem("room_id", JSON.stringify(room_id));
+    navigate("/lobby");
+    /*navigate("/lobby", {
       state: {
         player_data: new_player_data_id,
-        attached_room_id: room_id
       },
-    });
+    }); */
   };
 
   return (

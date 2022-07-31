@@ -28,13 +28,21 @@ function Lobby() {
 
   useEffect(() => {
     async function processData() {
-      const player_id = state.player_data;
+      //const player_id = state.player_data;
+      const string_playerid = localStorage.getItem("player_data");
+      const player_id = JSON.parse(string_playerid);
+      console.log("stored player id:", string_playerid);
 
-      // TODO: Get room_id using localStorage
-      const room_id = (await getDocumentData("players", player_id)).room_id;
+      // get room_id using localStorage
+      const room_id = localStorage.getItem("room_id");
       console.log("room id: ", room_id);
+      setLobbyRoomID(room_id);
+
+      // TODO: Get room code from room_id
+      
       var temp_array = [];
       // TODO: Verify if this new code works
+      // Jenn's comment: currently not working
       onSnapshot(collection(db, `/rooms/${room_id}/players`), (doc) => {
         // returns a promise
         if (!doc.empty) {
@@ -43,7 +51,7 @@ function Lobby() {
           temp_array.push(doc.id);
         }
       });
-      setListOfPlayers([...temp_array]);
+      setListOfPlayersIds([...temp_array]);
     }
 
     processData();
