@@ -102,7 +102,7 @@ function Lobby() {
                 <li className="item" key={item.id}>
                 <View style={{ display: 'flex', flexDirection: "row", justifyConten: 'center', alignItems: 'center' }}>
                     <div className="playerName">{item.name}</div>
-                    <div className="status" key={item.id}>{item.isReady.toString()} </div>
+                    <div className="status" key={item.id}>{item.isReady ? 'Ready' : 'Not Ready'} </div>
                 </View>
                 </li>
             ))}
