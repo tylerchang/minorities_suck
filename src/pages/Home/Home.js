@@ -35,11 +35,13 @@ function Home() {
 
   const handleSubmit1 = async (e) => {
     e.preventDefault();
-    const new_host_data_id = (await hostNewGame(values.name)).player_id;
+    const new_game_values = (await hostNewGame(values.name));
+    const new_host_data_id = new_game_values.player_id
+    const room_id = new_game_values.room_id
     console.log(new_host_data_id);
     // localStorage player name
     localStorage.setItem("player_data", JSON.stringify(new_host_data_id));
-    const room_id = (await hostNewGame(values.name)).room_id;
+    
     // localStorage room id
     localStorage.setItem("room_id", JSON.stringify(room_id));
     console.log(room_id);
@@ -54,12 +56,15 @@ function Home() {
   const handleSubmit2 = async (e) => {
     e.preventDefault();
     console.log(values.name, values.invitecode);
-    // Grab's 2nd object
-    const new_player_data_id = (await joinGame(values.name, values.invitecode))[1];
+    
+    const join_game_values = (await joinGame(values.name, values.invitecode));
+    const new_player_data_id = join_game_values[1];
+    const room_id = join_game_values[0];
+    
     console.log("New player id:", new_player_data_id);
     // localStorage player name
     localStorage.setItem("player_data", JSON.stringify(new_player_data_id));
-    const room_id = (await joinGame(values.name, values.invitecode))[0];
+   
     // localStorage room id
     localStorage.setItem("room_id", JSON.stringify(room_id));
     navigate("/lobby");

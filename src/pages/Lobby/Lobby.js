@@ -31,27 +31,32 @@ function Lobby() {
       //const player_id = state.player_data;
       const string_playerid = localStorage.getItem("player_data");
       const player_id = JSON.parse(string_playerid);
-      console.log("stored player id:", string_playerid);
+      console.log("stored player id:", player_id);
 
-      // get room_id using localStorage
-      const room_id = localStorage.getItem("room_id");
+      // get room_id using localStorage and get room code
+      const string_room_id = localStorage.getItem("room_id");
+      const room_id = JSON.parse(string_room_id)
       console.log("room id: ", room_id);
       setLobbyRoomID(room_id);
-
-      // TODO: Get room code from room_id
+      const rand = (await getDocumentData("rooms", room_id))
+      console.log(rand)
+      setLobbyRoomCode((await getDocumentData("rooms", room_id)).code);
       
-      var temp_array = [];
-      // TODO: Verify if this new code works
-      // Jenn's comment: currently not working
-      onSnapshot(collection(db, `/rooms/${room_id}/players`), (doc) => {
+      // Listen for changes in room's players collection
+      const room_player = room_id + "/" + "players"
+      onSnapshot(collection(db, "rooms", room_player), (collectionSnapshot) => {
         // returns a promise
-        if (!doc.empty) {
+        var temp_array = [];
+        // for each document in collection, push the name 
+        collectionSnapshot.forEach((doc) => {temp_array.push(doc.data().name);});
+        /* if (!doc.empty) {
           // DataFromSnapshot is what ever code you use to get an array of data from
           // a querySnapshot
           temp_array.push(doc.id);
-        }
+        } */
+        setListOfPlayersIds([...temp_array]);
       });
-      setListOfPlayersIds([...temp_array]);
+      // setListOfPlayersIds([...temp_array]);
     }
 
     processData();
