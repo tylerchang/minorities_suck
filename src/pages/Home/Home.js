@@ -4,7 +4,6 @@ import { View } from "react-native";
 import { Link, useNavigate } from "react-router-dom";
 import Popup from "../../components/Popup";
 import { hostNewGame, joinGame } from "../../firebase/database2";
-import Lobby from "../Lobby/Lobby";
 
 const initialValues = {
   name: "",

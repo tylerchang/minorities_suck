@@ -45,23 +45,6 @@ async function joinGame(player_name, room_code) {
 
   // Checks to see if the room exists
   if (docRefRoom) {
-    // If the room exists, create a new player with the input name
-
-    // console.log(docRefRoom.id);
-
-    // const room_players_ref = collection(db);
-    // const name_query = query(
-    //   collection(db, `/rooms/${docRefRoom.id}/players`),
-    //   where("name", "==", player_name)
-    // );
-
-    // const docSnapNames = await getDocs(name_query);
-
-    // if (docSnapNames.docs.length() > 0) {
-    //   console.log("Improper name");
-    //   return -1;
-    // }
-
     const docRefPlayer = await addPlayerToRoom(docRefRoom.id, player_name);
     return [docRefRoom.id, docRefPlayer.id];
   } else {
@@ -70,14 +53,19 @@ async function joinGame(player_name, room_code) {
 }
 
 async function setPlayerAsHost(room_id, player_id) {
-  console.log(room_id, player_id);
   const playerRef = doc(db, `/rooms/${room_id}/players`, player_id);
-
-  console.log(playerRef.id);
-
   await updateDoc(playerRef, {
     isHost: true,
   });
+}
+
+async function setPlayerReadyStatus(room_id, player_id, status){
+  console.log("reached")
+  const playerRef = doc(db, `/rooms/${room_id}/players`, player_id)
+  await updateDoc(playerRef, {
+    isReady: status,
+  });
+  console.log("Updated ready status of player: " + player_id)
 }
 
 // Now returns an object with both player and room ids
@@ -97,4 +85,4 @@ async function hostNewGame(player_name) {
   return { room_id: docRefRoom.id, player_id: docRefPlayer.id };
 }
 
-export { hostNewGame, joinGame };
+export { hostNewGame, joinGame, setPlayerReadyStatus};

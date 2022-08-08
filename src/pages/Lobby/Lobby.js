@@ -3,7 +3,8 @@ import { db } from "../../firebase/config.js";
 import "./Lobby.css";
 import { View } from "react-native";
 import { useLocation } from "react-router-dom";
-import { getDocumentData, getAllPlayersInRoom, setPlayerToReady } from "../../firebase/database";
+import { getDocumentData} from "../../firebase/database";
+import { setPlayerReadyStatus } from "../../firebase/database2.js";
 import {
   collection,
   addDoc,
@@ -20,10 +21,10 @@ function Lobby() {
 
   const listRef = useRef();
   const [heightvalue, setHeight] = useState();
-  const [listOfPlayersIds, setListOfPlayersIds] = useState([]);
+  const [listOfPlayers, setListOfPlayers] = useState([]);
   const [lobbyRoomCode, setLobbyRoomCode] = useState();
   const [lobbyRoomID, setLobbyRoomID] = useState();
-  const [playersReadyStatus, setPlayersReadyStatus] = useState(new Map());
+  const [currentReadyStatus, setCurrentReadyStatus] = useState(false);
   
 
   useEffect(() => {
@@ -48,52 +49,34 @@ function Lobby() {
         // returns a promise
         var temp_array = [];
         // for each document in collection, push the name 
-        collectionSnapshot.forEach((doc) => {temp_array.push(doc.data().name);});
+        collectionSnapshot.forEach((doc) => {temp_array.push(doc.data());});
         /* if (!doc.empty) {
           // DataFromSnapshot is what ever code you use to get an array of data from
           // a querySnapshot
           temp_array.push(doc.id);
         } */
-        setListOfPlayersIds([...temp_array]);
+        setListOfPlayers([...temp_array]);
       });
-      // setListOfPlayersIds([...temp_array]);
     }
 
     processData();
   }, []);
-
-  // this is the listener for the ready status, 
-  useEffect(() => {
-    // im so tired, something to think about --> where("room_id", "==", "f69Bm")
-    async function updateReadyStatus(){
-      const q = query(collection(db, "players"), where("isReady", "==", true));
-      return onSnapshot(q, (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          // adjusted this line to have doc.data().name instead of doc.id
-            setPlayersReadyStatus(new Map(playersReadyStatus.set(doc.data().name, true)));
-        });
-        }
-    )}
-    updateReadyStatus();
-  },[]);
-
   
-
-
-
   const getListSize = () => {
     const newHeight = listRef.current.clientHeight;
     setHeight(newHeight);
   };
 
   const updateReadyStatusButton = () => {
-    setPlayerToReady(state.player_data, lobbyRoomID);
-    console.log("Ready Updated");
+    const current_player_id = JSON.parse(localStorage.getItem("player_data"))
+    const current_room_id = JSON.parse(localStorage.getItem("room_id"));   
+    setPlayerReadyStatus(current_room_id, current_player_id, currentReadyStatus);
+    setCurrentReadyStatus(!currentReadyStatus)
   }
 
   useEffect(() => {
     getListSize();
-  }, [listOfPlayersIds]);
+  }, [listOfPlayers]);
 
   useEffect(() => {
     window.addEventListener("resize", getListSize);
@@ -115,11 +98,11 @@ function Lobby() {
             }}
         >
             <ul className="listItemClass" ref={listRef}>
-            {listOfPlayersIds.map((item) => (
+            {listOfPlayers.map((item) => (
                 <li className="item" key={item.id}>
                 <View style={{ display: 'flex', flexDirection: "row", justifyConten: 'center', alignItems: 'center' }}>
-                    <div className="playerName">{item}</div>
-                    <div className="status" key={item.id}>{playersReadyStatus.get(item) ? "Ready" : "Not Ready"} </div>
+                    <div className="playerName">{item.name}</div>
+                    <div className="status" key={item.id}>{item.isReady.toString()} </div>
                 </View>
                 </li>
             ))}
