@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { db } from "../../firebase/config.js";
 import "./Lobby.css";
 import { View } from "react-native";
-import { useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { getDocumentData} from "../../firebase/database";
 import { setPlayerReadyStatus } from "../../firebase/database2.js";
 import {
@@ -16,6 +16,7 @@ import {
   query,
   where
 } from "firebase/firestore/lite";
+
 function Lobby() {
   const { state } = useLocation();
 
@@ -26,6 +27,7 @@ function Lobby() {
   const [lobbyRoomID, setLobbyRoomID] = useState();
   const [currentReadyStatus, setCurrentReadyStatus] = useState(false);
   
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function processData() {
@@ -57,6 +59,7 @@ function Lobby() {
         } */
         setListOfPlayers([...temp_array]);
       });
+
     }
 
     processData();
@@ -72,6 +75,12 @@ function Lobby() {
     const current_room_id = JSON.parse(localStorage.getItem("room_id"));   
     setPlayerReadyStatus(current_room_id, current_player_id, currentReadyStatus);
     setCurrentReadyStatus(!currentReadyStatus)
+  }
+
+  const startGame = () => {
+    // need to check if current user is host
+    
+    navigate("/writequestions");
   }
 
   useEffect(() => {
@@ -113,7 +122,7 @@ function Lobby() {
         <View style={{ flexDirection: "row"}}>
             <button className="statusButton" onClick={updateReadyStatusButton}>Ready</button>
             <div className="space" />
-            <button className="statusButton">Start</button>
+            <button className="statusButton" onClick={startGame}>Start</button>
         </View>
         </div>
     </View>

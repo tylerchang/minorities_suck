@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import About from './pages/About';
 import HowToPlay from './pages/HowToPlay/HowToPlay';
 import Lobby from './pages/Lobby/Lobby';
+import Questions from './pages/Questions/Questions'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/howtoplay' exact element={<HowToPlay/>} />
         <Route path='/about' exact element={<About/>} />
         <Route path='/lobby' exact element={<Lobby/>} />
+        <Route path='/writequestions' exact element={<Questions/>} />
       </Routes>
     </Router>
     </>
