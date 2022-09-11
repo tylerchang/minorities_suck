@@ -30,6 +30,18 @@ async function addPlayerToRoom(room_id, player_name) {
   });
 }
 
+async function addQuestionToPlayer(roomID, playerID, questionText, answerOne, answerTwo){
+
+  return addDoc(collection(db, `/rooms/${roomID}/players/${playerID}/questions`), {
+    question: questionText,
+    answer_one: answerOne,
+    answer_two: answerTwo,
+    votes_one: 0,
+    votes_two: 0
+  });
+}
+
+
 // Now returns an object with both player and room ids
 async function joinGame(player_name, room_code) {
   // Gets a reference for the input room code
@@ -85,4 +97,4 @@ async function hostNewGame(player_name) {
   return { room_id: docRefRoom.id, player_id: docRefPlayer.id };
 }
 
-export { hostNewGame, joinGame, setPlayerReadyStatus};
+export { hostNewGame, joinGame, setPlayerReadyStatus, addQuestionToPlayer};

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import "./Questions.css"
+import {addQuestionToPlayer} from "../../firebase/database2";
 import { View } from "react-native";
 
 function Questions() {
@@ -18,6 +19,14 @@ function Questions() {
             ...state,
             [evt.target.name]: value
         })
+    }
+
+    const readyButtonClick = () => {
+        const current_player_id = JSON.parse(localStorage.getItem("player_data"))
+        const current_room_id = JSON.parse(localStorage.getItem("room_id"));  
+        console.log("CUR PLA ", current_player_id) 
+        console.log("CUR ROOM: ", current_room_id)
+        addQuestionToPlayer(current_room_id, current_player_id, state.question, state.answer1, state.answer2)
     }
 
     const adjustFontSize = () => {
@@ -86,7 +95,7 @@ function Questions() {
                         id="answer2"
                     />
                     </View>
-                    <button className="question_submit" type="submit" value="submit">
+                    <button className="question_submit" type="submit" value="submit" onClick={readyButtonClick}>
                         Ready
                     </button>
                 </form>
