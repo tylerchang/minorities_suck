@@ -77,7 +77,7 @@ async function setPlayerReadyStatus(room_id, player_id, status){
   await updateDoc(playerRef, {
     isReady: status,
   });
-  console.log("Updated ready status of player: " + player_id)
+  console.log("Updated ready status of player: " + player_id + " as " + status)
 }
 
 // Now returns an object with both player and room ids
