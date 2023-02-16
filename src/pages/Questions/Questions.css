@@ -1,0 +1,66 @@
+.mainLayout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.questions {
+    padding-top: 30px;
+}
+.question_input {
+    width: 600px;
+    height: 200px
+}
+.answer_input1 {
+    width: 300px;
+    height: 100px;
+    color: rgb(249, 141, 141);
+}
+.answer_input2 {
+    width: 300px;
+    height: 100px;
+    color: rgb(127, 189, 243);
+}
+.question_submit {
+    font-size: 25px;
+    width: 140px;
+    height: 40px;
+}
+
+
+@media screen and (max-width: 960px) and (min-width: 699px) {
+    .questions {
+        padding-top: 30px;
+    }
+    .question_input {
+        width: 400px;
+        height: 200px
+    }
+    .answer_input1 {
+        width: 200px;
+        height: 100px;
+    }
+    .answer_input2 {
+        width: 200px;
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .questions {
+        padding-top: 30px;
+    }
+    .question_input {
+        width: 300px;
+        height: 200px
+    }
+    .answer_input1 {
+        width: 150px;
+        height: 100px;
+    }
+    .answer_input2 {
+        width: 150px;
+        height: 100px;
+    }
+}
