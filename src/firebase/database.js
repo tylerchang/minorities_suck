@@ -1,4 +1,4 @@
-import { db } from "./config";
+import {db} from "./config";
 import {
   collection,
   addDoc,
@@ -111,6 +111,7 @@ async function hostNewGame(player_name) {
   return docRefPlayer.id;
 }
 
+ 
 export {
   hostNewGame,
   joinGame,
