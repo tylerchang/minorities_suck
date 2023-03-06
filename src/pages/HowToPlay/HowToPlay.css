@@ -1,0 +1,46 @@
+.howToPlay {
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+.steps {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 30px;
+}
+.button {
+    margin-top: 20px;
+    height: 50px;
+    width: 50px;
+    font-size: 25px;
+    background-color: rgb(249, 141, 141);
+    border-radius: 50px;
+    border-color:rgb(249, 141, 141);
+}
+.button:hover {
+    cursor: pointer;
+}
+.guideline img {
+    margin-top: 20px;
+}
+
+.steptitle {
+    font-size: 40px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.stepdetail {
+    font-size: 30px;
+    font-weight: 200;
+}
+.stepalign {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 30px;
+}
+
+
+
