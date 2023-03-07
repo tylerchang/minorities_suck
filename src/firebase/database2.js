@@ -27,6 +27,7 @@ async function addPlayerToRoom(room_id, player_name) {
     vote: -1,
     isHost: false,
     isReady: false,
+    randomQuestion: "",
   });
 }
 

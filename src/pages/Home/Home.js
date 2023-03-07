@@ -40,6 +40,7 @@ function Home() {
     console.log(new_host_data_id);
     // localStorage player name
     localStorage.setItem("player_data", JSON.stringify(new_host_data_id));
+    localStorage.setItem("host_data", JSON.stringify(new_host_data_id));
     
     // localStorage room id
     localStorage.setItem("room_id", JSON.stringify(room_id));
@@ -50,6 +51,7 @@ function Home() {
         player_data: new_host_data_id,
       },
     }); */
+
   };
 
   const handleSubmit2 = async (e) => {

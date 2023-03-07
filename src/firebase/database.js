@@ -9,6 +9,7 @@ import {
   doc,
   query,
   where,
+  onSnapshot,
 } from "firebase/firestore/lite";
 import { generateRoomCode } from "../resources/utilities";
 
@@ -30,7 +31,8 @@ async function addPlayer(player_name) {
     room_id: "",
     vote: -1,
     isHost: false,
-    isReady: false
+    isReady: false,
+    randomQuestion: "",
   });
 }
 
@@ -47,6 +49,23 @@ async function setPlayerToReady(player_id, room_id) {
   await updateDoc(player_ref, {
     isReady: true,
   });
+}
+
+async function storeRandomQuestion() {
+  const data = []
+  onSnapshot(collection(db, "sampleQuestions"), (collectionSnapshot) => {
+    collectionSnapshot.forEach((doc) => {data.push(doc.id);});
+  });
+  return data;
+}
+
+async function assignRandomQuestion(data, room_id, player_id, index) {
+  console.log(data[index]);
+  const player_ref = doc(db, `/rooms/${room_id}/players`, player_id)
+  await updateDoc(player_ref, {
+    randomQuestion: data[index],
+  });
+  console.log("Assigned randomQuestion to user");
 }
 
 
@@ -118,5 +137,7 @@ export {
   setPlayerAsHost,
   getDocumentData,
   getAllPlayersInRoom,
-  setPlayerToReady
+  setPlayerToReady,
+  storeRandomQuestion,
+  assignRandomQuestion,
 };

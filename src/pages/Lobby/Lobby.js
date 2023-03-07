@@ -3,7 +3,7 @@ import { db } from "../../firebase/config.js";
 import "./Lobby.css";
 import { View } from "react-native";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { getDocumentData} from "../../firebase/database";
+import { getDocumentData, storeRandomQuestion, assignRandomQuestion} from "../../firebase/database";
 import { setPlayerReadyStatus } from "../../firebase/database2.js";
 import {
   collection,
@@ -54,13 +54,30 @@ function Lobby() {
       const player_info = room_id + "/players/" + player_id
       checkPlayerHost((await getDocumentData("rooms", player_info)).isHost);
 
+      // TODO: random function but isn't properly working atm..
+      let rand_questions = await storeRandomQuestion();
+      let currentIndex = rand_questions.length;
+      let randomIndex;
+      console.log(rand_questions.length);
+      // While there remain elements to shuffle.
+      while (currentIndex != 0) {
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        // And swap it with the current element.
+        [rand_questions[currentIndex], rand_questions[randomIndex]] = [
+          rand_questions[randomIndex], rand_questions[currentIndex]];
+      }
+      console.log(rand_questions);
+
       // Listen for changes in room's players collection
       const room_player = room_id + "/" + "players"
       onSnapshot(collection(db, "rooms", room_player), (collectionSnapshot) => {
         // returns a promise
         var temp_array = [];
         // for each document in collection, push the name 
-        collectionSnapshot.forEach((doc) => {temp_array.push(doc.data());});
+        let i = 0;
+        collectionSnapshot.forEach((doc) => {temp_array.push(doc.data()); assignRandomQuestion(rand_questions, room_id, doc.id, i); i++;});
         /* if (!doc.empty) {
           // DataFromSnapshot is what ever code you use to get an array of data from
           // a querySnapshot
@@ -69,6 +86,20 @@ function Lobby() {
         setListOfPlayers([...temp_array]);
       });
 
+      //const host_info = room_id + "/players/" + host_id
+      //hostReady = (await getDocumentData("rooms", host_info)).isReady;
+      //if (hostReady && hostClickStart) {
+       // navigate("/writequestions");
+      //}
+      
+      // store appropriate variables used in question page
+      const randquestionassigned = (await getDocumentData("rooms", player_info)).randomQuestion;
+      const randquestion = (await getDocumentData("sampleQuestions", randquestionassigned)).question_text;
+      const randquestionanswer1 = (await getDocumentData("sampleQuestions", randquestionassigned)).answer_a;
+      const randquestionanswer2 = (await getDocumentData("sampleQuestions", randquestionassigned)).answer_b;
+      localStorage.setItem("rand_question", JSON.stringify(randquestion));
+      localStorage.setItem("rand_answer1", JSON.stringify(randquestionanswer1));
+      localStorage.setItem("rand_answer2", JSON.stringify(randquestionanswer2));
     }
 
     processData();
@@ -92,6 +123,7 @@ function Lobby() {
     //console.log(playerHost)
     console.log(readyStatus)
     if (playerHost && readyStatus) {
+      // TODO: make sure that users also get redirected when host starts game
       navigate("/writequestions");
     }
     else {
